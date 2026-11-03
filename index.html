@@ -16,8 +16,13 @@
 <body id="top">
 <div class="site-shell">
 
-    <nav class="navbar">
-        <div class="nav-brand">WEERAWAT Phattarasukkumjorn</div>
+    <nav class="navbar" aria-label="Main navigation">
+        <b>WEERAWAT Phattarasukkumjorn</b>
+        <div class="nav-links">
+            <a href="#publications" data-section="publications" aria-controls="publications">Publication and written work</a>
+            <a href="#class" data-section="class" aria-controls="class">Classes</a>
+            <a href="#databank" data-section="databank" aria-controls="databank">Data bank</a>
+        </div>
     </nav>
 
     <main class="page-grid">
@@ -49,7 +54,7 @@
 
 
             <!-- Publications -->
-            <details class="academic-section" id="publications" open>
+            <details class="academic-section" id="publications">
                 <summary class="section-heading">
                     <span class="section-title"><b>Publication and written work</b></span>
                     <span class="section-number">(1)</span>
@@ -220,7 +225,24 @@
                 </summary>
 
                 <div class="section-body simple-section">
-                    <p>Teaching materials and class information will be added here.</p>
+                    <div class="publication-group">
+                        <h3>2026 Semester 2 (January - May 2027) </h3>			
+                        <ul class="publication-list">
+                            <li>
+                                <div class="publication-title-row">
+                                    <a href="https://drive.google.com/drive/folders/1fBLkQIxPbYChq5hho5OvMQXP9AtYK_0k?usp=sharing" target="_blank" rel="noopener">EE215 Research Methodology</a>
+                                </div>
+                                <div class="publication-journal">Section 3, Tuesday 09:00 - 12:00</div>
+                            </li>
+                           <li>
+                                <div class="publication-title-row">
+                                    <a href="https://drive.google.com/drive/folders/1uva94o3Fr9h4596QFM2WfZ3S1fuqfKJZ?usp=sharing" target="_blank" rel="noopener">EE311 Microeconomics Theory</a>
+                                </div>
+                                <div class="publication-journal">Section 1, Wednesday, Friday 09:00 - 11:00</div>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </details>
 
@@ -244,5 +266,62 @@
         </section>
     </main>
 </div>
+
+<script>
+    // Navigation opens the selected section and closes the others.
+    const sectionLinks = document.querySelectorAll('.nav-links a[data-section]');
+    const academicSections = document.querySelectorAll('.academic-section');
+
+    sectionLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const targetId = link.dataset.section;
+            const target = document.getElementById(targetId);
+            if (!target) return;
+
+            academicSections.forEach((section) => {
+                section.open = section.id === targetId;
+            });
+
+            sectionLinks.forEach((item) => {
+                if (item === link) {
+                    item.setAttribute('aria-current', 'page');
+                } else {
+                    item.removeAttribute('aria-current');
+                }
+            });
+
+            history.replaceState(null, '', `#${targetId}`);
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // Also enforce the one-section-at-a-time behavior when a section heading
+    // is opened directly.
+    academicSections.forEach((section) => {
+        section.addEventListener('toggle', () => {
+            if (!section.open) return;
+
+            academicSections.forEach((other) => {
+                if (other !== section) other.open = false;
+            });
+
+            sectionLinks.forEach((link) => {
+                if (link.dataset.section === section.id) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        });
+    });
+
+    // Always start with all sections collapsed when the page is opened.
+    academicSections.forEach((section) => {
+        section.open = false;
+    });
+    sectionLinks.forEach((link) => link.removeAttribute('aria-current'));
+</script>
 </body>
 </html>
