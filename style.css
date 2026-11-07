@@ -50,15 +50,14 @@ a {
     border: 1px solid #c4c6c8;
     border-radius: 26px;
     box-shadow: var(--shadow);
-    overflow: visible;
+    overflow: hidden;
 }
 
 /* ---------- Navigation ---------- */
 
 .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    position: relative;
+    z-index: 1;
     min-height: 76px;
     padding: 0 30px;
     display: flex;
@@ -150,8 +149,8 @@ a {
 }
 
 .profile-panel {
-    position: sticky;
-    top: 20px;
+    position: relative;
+    top: auto;
     align-self: start;
     min-height: 100%;
     padding: 58px 38px 48px;
@@ -477,10 +476,10 @@ footer a:hover {
 
 @media (max-width: 560px) {
     .site-shell {
-        width: 100%;
-        margin: 0;
-        border: 0;
-        border-radius: 0;
+        width: calc(100% - 24px);
+        margin: 12px auto;
+        border: 1px solid #c4c6c8;
+        border-radius: 18px;
     }
 
     .navbar {
